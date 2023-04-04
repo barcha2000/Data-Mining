@@ -1,0 +1,16 @@
+---
+title: "Analiza odchodzenia klientów"
+author: "Bartosz Chądzyński & Michał Turek"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r chunk-0, echo=FALSE}
+source("rscripts/test.R", local = knitr::knit_global())
+```
+
