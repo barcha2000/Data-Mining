@@ -9,6 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Wstęp
 
 ```{r chunk-0, echo=FALSE}
 source("rscripts/test.R", local = knitr::knit_global())
