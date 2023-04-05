@@ -1,6 +1,6 @@
 ---
 title: "Analiza odchodzenia klientów"
-author: "Bartosz Chądzyński & Michał Turek"
+author: "Bartosz Chądzyński 255680 & Michał Turek 246993"
 date: "`r Sys.Date()`"
 output: pdf_document
 ---
