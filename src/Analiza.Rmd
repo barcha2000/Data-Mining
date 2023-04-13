@@ -9,9 +9,61 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r chunk-0, include=FALSE}
+source("src/rscripts/DataImport.R", local = knitr::knit_global())
+```
+
 # Wstęp
 
-```{r chunk-0, echo=FALSE}
-source("rscripts/test.R", local = knitr::knit_global())
+
+# Preprocessing
+
+## Wykresy 
+
+```{r chunk-1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots.R", local = knitr::knit_global())
 ```
+
+```{r chunk-2, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots_Churn.R", local = knitr::knit_global())
+```
+
+```{r chunk-3, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density.R", local = knitr::knit_global())
+```
+
+```{r chunk-4, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density_Churn.R", local = knitr::knit_global())
+```
+
+
+```{r chunk-5, fig.width=8, fig.height=12, echo=FALSE, message=FALSE, warning=FALSE,out.extra='angle=90'}
+#source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+
+library(ggplot2)
+library(ggpubr)
+library(gridExtra)
+library(dplyr)
+library(purrr)
+
+# Wybór zmiennych kategorycznych
+
+cat_cols <- WA_Fn_UseC_Telco_Customer_Churn %>%
+  select(-customerID, -tenure, -MonthlyCharges, -TotalCharges, -Churn) %>%
+  keep(is.character) %>% 
+  names()
+
+# Barploty dla zmiennych kategorycznych
+
+plots <- lapply(cat_cols, function(col) {
+  ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col)) +
+    geom_bar(fill = "lightblue")
+})
+
+grid.arrange(grobs = plots, ncol = 4)
+
+```
+
+
+
 
