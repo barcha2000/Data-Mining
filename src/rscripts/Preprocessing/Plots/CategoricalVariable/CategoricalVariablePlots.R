@@ -10,7 +10,7 @@ library(purrr)
 
 cat_cols <- WA_Fn_UseC_Telco_Customer_Churn %>%
   select(-customerID, -tenure, -MonthlyCharges, -TotalCharges, -Churn) %>%
-  keep(is.character) %>% # wybierz tylko zmienne kategoryczne
+  keep(is.character) %>% 
   names()
 
 # Barploty dla zmiennych kategorycznych

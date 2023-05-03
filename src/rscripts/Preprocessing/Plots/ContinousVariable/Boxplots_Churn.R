@@ -3,7 +3,9 @@
 library(gridExtra)
 library(ggplot2)
 
+
 # Boxploty dla zmiennych ciągłych z podziałem na Churn
+
 
 boxplot_tenure_churn <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes(x = Churn, y = tenure, fill = Churn, group = Churn, color = Churn)) +
   geom_boxplot(alpha = 0.5) +
