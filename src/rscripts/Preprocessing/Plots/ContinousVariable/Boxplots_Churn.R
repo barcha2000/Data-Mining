@@ -8,9 +8,9 @@ library(ggplot2)
 
 
 boxplot_tenure_churn <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes(x = Churn, y = tenure, fill = Churn, group = Churn, color = Churn)) +
-  geom_boxplot(alpha = 0.5) +
-  scale_fill_manual(values = c("Yes" = "red", "No" = "gray")) +
-  scale_color_manual(values = c("Yes" = "red", "No" = "gray")) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  scale_fill_manual(values = c("1" = "red", "0" = "gray")) +
+  scale_color_manual(values = c("1" = "red", "0" = "gray")) +
   theme_gray() +
   labs(title = "Tenure by Churn", x = "Churn", y = "Tenure") +
   guides(fill = guide_legend(title = "Churn"), color = guide_legend(title = "Churn")) +
@@ -18,9 +18,9 @@ boxplot_tenure_churn <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes(x = Churn, y
 
 
 boxplot_monthly_charges_churn <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes(x = Churn, y = MonthlyCharges, fill = Churn, group = Churn, color = Churn)) +
-  geom_boxplot(alpha = 0.5) +
-  scale_fill_manual(values = c("Yes" = "green", "No" = "gray")) +
-  scale_color_manual(values = c("Yes" = "green", "No" = "gray")) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  scale_fill_manual(values = c("1" = "green", "0" = "gray")) +
+  scale_color_manual(values = c("1" = "green", "0" = "gray")) +
   theme_gray() +
   labs(title = "Monthly Charges by Churn", x = "Churn", y = "Monthly Charges") +
   guides(fill = guide_legend(title = "Churn"), color = guide_legend(title = "Churn")) +
@@ -28,9 +28,9 @@ boxplot_monthly_charges_churn <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes(x =
 
 
 boxplot_total_charges_churn <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes(x = Churn, y = TotalCharges, fill = Churn, group = Churn, color = Churn)) +
-  geom_boxplot(alpha = 0.5) +
-  scale_fill_manual(values = c("Yes" = "blue", "No" = "gray")) +
-  scale_color_manual(values = c("Yes" = "blue", "No" = "gray")) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  scale_fill_manual(values = c("1" = "blue", "0" = "gray")) +
+  scale_color_manual(values = c("1" = "blue", "0" = "gray")) +
   theme_gray() +
   labs(title = "Total Charges by Churn", x = "Churn", y = "Total Charges") +
   guides(fill = guide_legend(title = "Churn"), color = guide_legend(title = "Churn")) +

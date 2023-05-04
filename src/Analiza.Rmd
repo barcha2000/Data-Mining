@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r chunk-0, include=FALSE}
 source("src/rscripts/DataImport.R", local = knitr::knit_global())
+source("src/rscripts/NormalizedData.R", local = knitr::knit_global())
 ```
 
 # Wstęp
@@ -79,7 +80,7 @@ grid.arrange(grobs = plots, ncol = 4)
 
 \clearpage
 
-# Interpretacja Wyników
+## Interpretacja Wyników
 
 W naszych danych jest zaledwie 11 obserwacji z brakującymi danymi (na 7033 łącznie). Zatem zasadne jest pominięcie ich w trakcie analizy danych. Nie stosujemy żadnej imputacji. Ilość danych może być obciążająca dla niektórych modeli. Jeśli będą występowały problemy ze złożonością obliczeniową, to dla konkretnego modelu będziemy decydować o przeprowadzeniu analizy dla ewentualnego podzbioru danych.
 
@@ -90,4 +91,31 @@ source("src/rscripts/Preprocessing/CorrelationAnalysis/ContiniousVariableCorrela
 ```
 
 
-Najprawdopodbniej potrzebne będzie wykonanie transformacji danych, w szczególności normalizacji. Natomiast jeśli chodzi o obserwacje odstające, to nie ma ich za dużo. Natomiast pojawiają się licznie w przypadku zmiennej \textsl{TotalCharges} pogrupowanej ze względu na \textsl{Churn}. Widać, że jest tendencja, aby odchodzący klienci należej do jednej z dwóch grup. Są albo nowymi klientami, albo klientami z dużym stażem. Ta druga grupa jest na wykresie pudełkowym interpertowana jako obserwacje odstające. W rzeczywistości należy to interpretować tak, że rozkład tej zmiennej jest dwumodalny,nie będziemy stosować technik mających na celu ignorowanie lub zmniejszenie wpływu tych obserwacji, znacząco odbiegających od reszty.
+Najprawdopodbniej potrzebne będzie wykonanie transformacji danych, w szczególności normalizacji. Natomiast jeśli chodzi o obserwacje odstające, to nie ma ich za dużo. Pojawiają się licznie w przypadku zmiennej \textsl{TotalCharges} pogrupowanej ze względu na \textsl{Churn}. Widać, że jest tendencja, aby odchodzący klienci należej do jednej z dwóch grup. Są albo nowymi klientami, albo klientami z dużym stażem. Ta druga grupa jest na wykresie pudełkowym interpertowana jako obserwacje odstające. W rzeczywistości należy to interpretować tak, że rozkład tej zmiennej jest dwumodalny,nie będziemy stosować technik mających na celu ignorowanie lub zmniejszenie wpływu tych obserwacji, znacząco odbiegających od reszty.
+
+# Klasyfikacja
+
+## Regresja Liniowa
+
+Zacznijmy od metod, w których bierzemy pod uwagę jedynie zmienne ciągłe. Na początek regresja liniowa. 
+
+```{r chunk-8, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
+source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
+
+plot_threshold_accuracy(prediction)
+```
+
+```{r chunk-9, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/LinearRegression/LinearRegressionConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-10, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionCoefficientPlot}wartości współczynników w modelu regresji"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
+source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
+
+plot_regression_coefficients(model)
+```
+
