@@ -5,7 +5,7 @@ library(ggpubr)
 library(gridExtra)
 library(dplyr)
 library(purrr)
-
+library(tidyr)
 # Wybór zmiennych kategorycznych
 
 cat_cols <- WA_Fn_UseC_Telco_Customer_Churn %>%
@@ -17,8 +17,10 @@ cat_cols <- WA_Fn_UseC_Telco_Customer_Churn %>%
 
 plots <- lapply(cat_cols, function(col) {
   ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col)) +
-    geom_bar(fill = "lightblue")
+    geom_bar(fill = "lightblue") +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 })
 
 grid.arrange(grobs = plots, ncol = 4)
+
 
