@@ -22,6 +22,10 @@ source("src/rscripts/NormalizedData.R", local = knitr::knit_global())
 ## Wykresy 
 Zacznijmy od analizy wykresów. Na początek zmienne ciągłe. Na wykresie \ref{fig:Boxplots} i \ref{fig:Density} widzimy, że zmienne te są w znacząco różnych skalach, więc prawdopodobnie potrzebna będzie normalizacja. Natomiast na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każda ze zmiennych ma istotnie różny rozkład, gdy pogrupujemy ją ze względu na Churn.
 
+```{r chunk-1.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis'}
+source("src/rscripts/Preprocessing/ContinousVariableSummary.R", local = knitr::knit_global())
+```
+
 Z kolei na \ref{fig:CategorialVariable} widzimy, że w niektórych przypadkach są duże różnice w ilości obserwacji z każdej kategorii, jeśli chodzi o daną zmienną. W szczególności takimi zmiennymi są \textsl{PhoneService}, czy \textsl{MultipleLines}.
 
 ```{r chunk-1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots}Boxploty zmiennych ciągłych"}
