@@ -9,9 +9,170 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Wstęp
-
-```{r chunk-0, echo=FALSE}
-source("rscripts/test.R", local = knitr::knit_global())
+```{r chunk-0, include=FALSE}
+source("src/rscripts/DataImport.R", local = knitr::knit_global())
+source("src/rscripts/NormalizedData.R", local = knitr::knit_global())
 ```
 
+# Wstęp
+
+
+# Preprocessing
+
+## Wykresy 
+Zacznijmy od analizy wykresów. Na początek zmienne ciągłe. Na wykresie \ref{fig:Boxplots} i \ref{fig:Density} widzimy, że zmienne te są w znacząco różnych skalach, więc prawdopodobnie potrzebna będzie normalizacja. Natomiast na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każda ze zmiennych ma istotnie różny rozkład, gdy pogrupujemy ją ze względu na Churn.
+
+Z kolei na \ref{fig:CategorialVariable} widzimy, że w niektórych przypadkach są duże różnice w ilości obserwacji z każdej kategorii, jeśli chodzi o daną zmienną. W szczególności takimi zmiennymi są \textsl{PhoneService}, czy \textsl{MultipleLines}.
+
+```{r chunk-1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots}Boxploty zmiennych ciągłych"}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots.R", local = knitr::knit_global())
+```
+
+```{r chunk-2, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots_Churn}Boxploty zmiennych ciągłych z  podziałem ze względu na Churn"}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots_Churn.R", local = knitr::knit_global())
+```
+
+```{r chunk-3, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Density}Estymator jądrowy gęśtości"}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density.R", local = knitr::knit_global())
+```
+
+```{r chunk-4, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Density_Churn}Estymator jądrowy gęśtości z podziałem ze względu na Churn"}
+source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density_Churn.R", local = knitr::knit_global())
+```
+
+
+```{r chunk-5, fig.width=8, fig.height=12, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
+#out.extra='angle=90'
+
+#source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+
+library(ggplot2)
+library(ggpubr)
+library(gridExtra)
+library(dplyr)
+library(purrr)
+library(tidyr)
+
+# Wybór zmiennych kategorycznych
+library(ggplot2)
+library(ggpubr)
+library(gridExtra)
+library(dplyr)
+library(purrr)
+
+# Wybór zmiennych kategorycznych
+
+cat_cols <- WA_Fn_UseC_Telco_Customer_Churn %>%
+  select(-customerID, -tenure, -MonthlyCharges, -TotalCharges, -Churn) %>%
+  keep(is.character) %>% 
+  names()
+
+# Barploty dla zmiennych kategorycznych
+
+plots <- lapply(cat_cols, function(col) {
+  ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col)) +
+    geom_bar(fill = "lightblue")
+})
+
+grid.arrange(grobs = plots, ncol = 4)
+
+```
+
+\clearpage
+
+## Interpretacja Wyników
+
+W naszych danych jest zaledwie 11 obserwacji z brakującymi danymi (na 7033 łącznie). Zatem zasadne jest pominięcie ich w trakcie analizy danych. Nie stosujemy żadnej imputacji. Ilość danych może być obciążająca dla niektórych modeli. Jeśli będą występowały problemy ze złożonością obliczeniową, to dla konkretnego modelu będziemy decydować o przeprowadzeniu analizy dla ewentualnego podzbioru danych.
+
+W tabeli poniżej mamy macierz korelacji zmiennych ciągłych. Jak widać istnieje mocna korelacja pomiędzy tym jak długo klient korzysta/korzystał z usług, a kwotą jaką zapłacił za usługi. Nie powinno to dziwić. Na razie jednak nie decydujemy się na wyrzucenie którejś ze zmiennych, ponieważ zarówno czas jak i koszt może być istotny w kontekście odchodzenia klientów. Te dwie rzeczy nie muszą być ze sobą powiązane w pełni. Może być tak, że odchodzą głównie nowi klienci, niezależnie od tego ile płacą. Albo może być tak, że odchodzą klienci, którzy zapłacili rachunki powyżej pewnej sumy, niekoniecznie będący długo/krótko stażem.
+
+```{r chunk-7, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Preprocessing/CorrelationAnalysis/ContiniousVariableCorrelation.R", local = knitr::knit_global())
+```
+
+
+Najprawdopodbniej potrzebne będzie wykonanie transformacji danych, w szczególności normalizacji. Natomiast jeśli chodzi o obserwacje odstające, to nie ma ich za dużo. Pojawiają się licznie w przypadku zmiennej \textsl{TotalCharges} pogrupowanej ze względu na \textsl{Churn}. Widać, że jest tendencja, aby odchodzący klienci należej do jednej z dwóch grup. Są albo nowymi klientami, albo klientami z dużym stażem. Ta druga grupa jest na wykresie pudełkowym interpertowana jako obserwacje odstające. W rzeczywistości należy to interpretować tak, że rozkład tej zmiennej jest dwumodalny,nie będziemy stosować technik mających na celu ignorowanie lub zmniejszenie wpływu tych obserwacji, znacząco odbiegających od reszty.
+
+# Klasyfikacja
+
+## Regresja Liniowa
+
+Zacznijmy od metod, w których bierzemy pod uwagę jedynie zmienne ciągłe. Na początek regresja liniowa. 
+
+```{r chunk-8, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
+source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
+
+plot_threshold_accuracy(linear_regression_model, test_data)
+```
+
+```{r chunk-9, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/LinearRegression/LinearRegressionConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-10, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
+source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
+
+plot_regression_coefficients(linear_regression_model)
+```
+
+
+
+## Regresja Logistyczna
+
+```{r chunk-11, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
+source("src/rscripts/Classification/LogisticRegression/LogisticRegression.R")
+plot_threshold_accuracy(logistic_regression_model, test_data)
+```
+
+```{r chunk-12, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/LogisticRegression/LogisticRegressionConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-13, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LogisticRegression/LogisticRegression.R")
+source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
+plot_regression_coefficients(logistic_regression_model)
+```
+
+## Algorytm Naiwnego Bayesa
+
+```{r chunk-14, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/NaiveBayes/NaiveBayesConfusionMatrix.R", local = knitr::knit_global())
+```
+
+## Algorytm k sąsiadów
+
+```{r chunk-15, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:kNNPlotAccuracy}Skuteczność predykcji dla poszczególnych wartości k"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+source("src/rscripts/Classification/kNN/kNN.R")
+source("src/rscripts/Classification/kNN/kNNExecute.R")
+
+plot_knn_accuracy_and_confusion_matrix(train_data_num,test_data_num)$plot
+```
+
+```{r chunk-16, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/kNN/kNNConfusionMatrix.R", local = knitr::knit_global())
+```
+
+## Drzewo decyzyjne
+
+```{r chunk-17, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:DecisionTree}Drzewo dezycyjne", results='hide'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+#source("src/rscripts/Classification/DecisionTree/DecisionTreeExecute.R")
+
+#print(decision_boundary)
+```
+
+```{r chunk-18, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/DecisionTree/DecisionTreeConfusionMatrix.R")
+```
