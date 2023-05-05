@@ -104,18 +104,75 @@ Zacznijmy od metod, w których bierzemy pod uwagę jedynie zmienne ciągłe. Na 
 source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
 source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
 
-plot_threshold_accuracy(prediction)
+plot_threshold_accuracy(linear_regression_model, test_data)
 ```
 
 ```{r chunk-9, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 source("src/rscripts/Classification/LinearRegression/LinearRegressionConfusionMatrix.R", local = knitr::knit_global())
 ```
 
-```{r chunk-10, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionCoefficientPlot}wartości współczynników w modelu regresji"}
+```{r chunk-10, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
 source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
 source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
 
-plot_regression_coefficients(model)
+plot_regression_coefficients(linear_regression_model)
 ```
 
+
+
+## Regresja Logistyczna
+
+```{r chunk-11, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
+source("src/rscripts/Classification/LogisticRegression/LogisticRegression.R")
+plot_threshold_accuracy(logistic_regression_model, test_data)
+```
+
+```{r chunk-12, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/LogisticRegression/LogisticRegressionConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-13, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/LogisticRegression/LogisticRegression.R")
+source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
+plot_regression_coefficients(logistic_regression_model)
+```
+
+## Algorytm Naiwnego Bayesa
+
+```{r chunk-14, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/NaiveBayes/NaiveBayesConfusionMatrix.R", local = knitr::knit_global())
+```
+
+## Algorytm k sąsiadów
+
+```{r chunk-15, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:kNNPlotAccuracy}Skuteczność predykcji dla poszczególnych wartości k"}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+source("src/rscripts/Classification/kNN/kNN.R")
+source("src/rscripts/Classification/kNN/kNNExecute.R")
+
+plot_knn_accuracy_and_confusion_matrix(train_data_num,test_data_num)$plot
+```
+
+```{r chunk-16, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/kNN/kNNConfusionMatrix.R", local = knitr::knit_global())
+```
+
+## Drzewo decyzyjne
+
+```{r chunk-17, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:DecisionTree}Drzewo dezycyjne", results='hide'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
+#source("src/rscripts/Classification/DecisionTree/DecisionTreeExecute.R")
+
+#print(decision_boundary)
+```
+
+```{r chunk-18, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+#source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
+source("src/rscripts/Classification/DecisionTree/DecisionTreeConfusionMatrix.R")
+```

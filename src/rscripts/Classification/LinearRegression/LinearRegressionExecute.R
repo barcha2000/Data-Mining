@@ -11,7 +11,7 @@ accuracies <- rep(0, length(thresholds))
 
 # dokonujemy predykcji dla każdej wartości progu
 for (i in seq_along(thresholds)) {
-  prediction <- make_linear_regression_prediction(model, test_data, threshold = thresholds[i])
+  prediction <- make_linear_regression_prediction(linear_regression_model, test_data, threshold = thresholds[i])
   accuracies[i] <- prediction$accuracy
 }
 

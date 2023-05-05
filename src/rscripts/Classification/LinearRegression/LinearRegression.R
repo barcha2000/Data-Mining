@@ -1,4 +1,5 @@
 library(dplyr)
+library(ggplot2)
 
 build_linear_regression_model <- function(train_data, variables = c("tenure", "MonthlyCharges", "TotalCharges", "Churn")) {
   df_subset <- train_data %>% dplyr::select(variables)
@@ -15,7 +16,7 @@ make_linear_regression_prediction <- function(model, test_data, threshold = 0.5,
   return(list(classified = classified, accuracy = accuracy, confusion_matrix = confusion_matrix))
 }
 
-plot_threshold_accuracy <- function(predictions) {
+plot_threshold_accuracy <- function(model, test_data) {
   # tworzymy sekwencję progów od 1 do 2 z krokiem 0.01
   thresholds <- seq(1, 2, by = 0.01)
   
