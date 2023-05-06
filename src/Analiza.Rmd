@@ -7,23 +7,95 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/micha/OneDrive/Pulpit/Data-Mining")
 ```
 
 ```{r chunk-0, include=FALSE}
-source("src/rscripts/DataImport.R", local = knitr::knit_global())
-source("src/rscripts/NormalizedData.R", local = knitr::knit_global())
+source("src/rscripts/DataImport.R",local = knitr::knit_global())
+source("src/rscripts/NormalizedData.R",local = knitr::knit_global())
 ```
 
 # Wstęp
 
+Nasz projekt będzie dotyczył analizy danych dotyczących odchodzenia klientów firmy telekomunikacyjnej. Naszym celem jest zrozumienie, jakie czynniki wpływają na decyzję klientów o pozostaniu lub odejściu od firmy oraz jak te czynniki wpływają na skuteczność działań związanych z retencją klientów.
+W ramach projektu przeprowadzamy analizę danych, w tym eksploracyjną analizę, w której badamy rozkłady zmiennych oraz korelacje między nimi. Wprowadzamy również preprocessing danych, w tym normalizację oraz kodowanie zmiennych kategorycznych. Następnie tworzymy modele predykcyjne, które pozwalają na przewidywanie odchodzenia klientów. Przetestujemy różne algorytmy klasyfikacji, dobierając ostatecznie najlepszy.W efekcie naszej analizy otrzymujemy narzędzie predykcyjne.
+
 
 # Preprocessing
 
+## Analiza opisowa
+
+Zbiór danych Telco Customer Churn składa się z 7043 obserwacji (klientów) i 21 zmiennych. 
+
+-customerID - unikalny identyfikator klienta
+
+-gender - płeć klienta
+
+-SeniorCitizen - czy klient jest emerytem (1) czy nie (0)
+
+-Partner - czy klient ma partnera (Tak/Nie)
+
+-Dependents - czy klient ma na utrzymaniu innych członków rodziny (Tak/Nie)
+
+-tenure - okres w miesiącach, przez który klient był klientem firmy
+
+-PhoneService - czy klient korzysta z usług telefonicznych (Tak/Nie)
+
+-MultipleLines - czy klient ma więcej niż jedną linię telefoniczną (Tak/Nie/Brak usługi)
+
+-InternetService - typ łącza internetowego (DSL, Fiber optic, Brak usługi)
+
+-OnlineSecurity - czy klient korzysta z usług zabezpieczeń internetowych (Tak/Nie/Brak usługi)
+
+-OnlineBackup - czy klient korzysta z usług kopii zapasowych danych online (Tak/Nie/Brak usługi)
+
+-DeviceProtection - czy klient korzysta z usług zabezpieczeń urządzeń (Tak/Nie/Brak usługi)
+
+-TechSupport - czy klient korzysta z usług technicznej pomocy (Tak/Nie/Brak usługi)
+
+-StreamingTV - czy klient korzysta z usług strumieniowego przesyłania telewizji (Tak/Nie/Brak usługi)
+
+-StreamingMovies - czy klient korzysta z usług strumieniowego przesyłania filmów (Tak/Nie/Brak usługi)
+
+-Contract - typ umowy (Month-to-month, One year, Two year)
+
+-PaperlessBilling - czy klient otrzymuje faktury w formie papierowej (Tak/Nie)
+
+-PaymentMethod - metoda płatności (Electronic check, Mailed check, Bank transfer (automatic), Credit 
+card (automatic))
+
+-MonthlyCharges - miesięczny rachunek klienta
+
+-TotalCharges - łączny rachunek klienta
+
+-Churn - czy klient zrezygnował z usług firmy (Tak/Nie).
+
+Wszystkie zmienne są w formie tekstowej, lub binarnej, oprócz trzech zmiennych numerycznych: SeniorCitizen, tenure, MonthlyCharges oraz jednej zmiennej numerycznej typu float: TotalCharges. Na początku dokonamy analizy tych trzech zmiennych numerycznych, wykorzystując podstawowe statystyki.
+
+```{r chunk-0.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis', fig.cap="\\label{fig:Summary}Summary Table"}
+source("src/rscripts/Preprocessing/NumericalAnalysis/NumericalAnalysis.R", local = knitr::knit_global())
+```
+
+Badając mediany i średnie poszczególnych zmiennych z tabeli \ref{fig:Summary} możemy wyciągnąć kilka wniosków. Na przykład średnia wartość miesięcznej opłaty to 64.76 dolara, a mediana to 70.35 dolara. Można z tego wnioskować, że rozkład tej zmiennej jest skośny w lewo, co sugeruje, że większość klientów płaci więcej niż średnia wartość.Średni czas trwania umowy wynosi 32.37 miesiąca, a mediana to 29 miesięcy. Można zauważyć, że większość klientów trzyma się firmy przez mniej niż 3 lata. Średnia wartość MonthlyCharge dla klientów, którzy odeszli (churn=Yes), wynosi 74.44 dolarów, podczas gdy dla klientów, którzy pozostali (churn=No), wynosi 61.27 dolarów. Można z tego wnioskować, że klienci, którzy płacą więcej za usługi, są bardziej skłonni do zrezygnowania z nich. Są to oczywiście tylko przykładowe wnioski, które możemy wyciągnąć z danych na podstawie prostych statystyk. W dalszych częściach pracy będziemy analizowali dane z pomocą modeli o różnej złożoności. 
+
+Spójrzmy teraz na pozostałe zmienne. Na podstawie rozkładu zmiennych w poszczególnych kategoriach możemy wyciągnąć kilka wniosków (udział ten można zobaczyć na histogramach w kolejnym podrozdziale). Między innymi:
+-Większość klientów to osoby indywidualne (71,5%).
+
+-Większość klientów korzysta z usługi telefonii cyfrowej (90,3%).
+
+-Większość klientów korzysta z faktury elektronicznej (70,4%).
+
+-Większość klientów nie korzysta z usługi ochrony urządzeń (90,1%).
+
+-Około połowa klientów korzysta z usługi internetu szerokopasmowego (46,8%).
+
+Z powyższych danych można wywnioskować, że firma powinna skupić się na promowaniu usługi internetu szerokopasmowego oraz usługi ochrony urządzeń, aby zwiększyć liczbę klientów korzystających z tych usług. Dodatkowo, firma powinna zastanowić się nad przyczynami, dla których tak mało klientów korzysta z faktury elektronicznej i ewentualnie wdrożyć działania promocyjne, zachęcające do korzystania z tej formy rozliczenia.
+
 ## Wykresy 
-Zacznijmy od analizy wykresów. Na początek zmienne ciągłe. Na wykresie \ref{fig:Boxplots} i \ref{fig:Density} widzimy, że zmienne te są w znacząco różnych skalach, więc prawdopodobnie potrzebna będzie normalizacja. Natomiast na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każda ze zmiennych ma istotnie różny rozkład, gdy pogrupujemy ją ze względu na Churn.
+Następnie przejdźmy do analizy wykresów. Na początek zmienne ciągłe. Na wykresie \ref{fig:Boxplots} i \ref{fig:Density} widzimy, że zmienne te są w znacząco różnych skalach, więc prawdopodobnie potrzebna będzie normalizacja. Natomiast na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każda ze zmiennych ma istotnie różny rozkład, gdy pogrupujemy ją ze względu na Churn.
 
 ```{r chunk-1.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis'}
-source("src/rscripts/Preprocessing/ContinousVariableSummary.R", local = knitr::knit_global())
+#source("src/rscripts/Preprocessing/ContinousVariableSummary.R", local = knitr::knit_global())
 ```
 
 Z kolei na \ref{fig:CategorialVariable} widzimy, że w niektórych przypadkach są duże różnice w ilości obserwacji z każdej kategorii, jeśli chodzi o daną zmienną. W szczególności takimi zmiennymi są \textsl{PhoneService}, czy \textsl{MultipleLines}.
@@ -180,3 +252,29 @@ source("src/rscripts/Classification/kNN/kNNConfusionMatrix.R", local = knitr::kn
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
 source("src/rscripts/Classification/DecisionTree/DecisionTreeConfusionMatrix.R")
 ```
+
+## Random forest
+
+```{r chunk-19, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/RandomForest/RandomForestExecute.R", local = knitr::knit_global())
+ggplot(data = results, aes(x = ntrees, y = accuracy)) +
+  geom_line() +
+  geom_vline(xintercept = subset(results, accuracy == max(accuracy))$ntrees, color = "red") +
+  ggtitle("Zależność między dokładnością predykcji a ilością drzew w Random Forest") +
+  xlab("Ilość drzew") +
+  ylab("Dokładność predykcji")
+
+```
+
+## Boosting
+
+```{r chunk-20, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/Boosting/Boosting.R", local = knitr::knit_global())
+```
+
+## Bagging
+
+```{r chunk-21, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/Bagging/Bagging.R", local = knitr::knit_global())
+```
+
