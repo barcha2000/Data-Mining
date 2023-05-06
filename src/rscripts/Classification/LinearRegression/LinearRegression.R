@@ -13,7 +13,7 @@ make_linear_regression_prediction <- function(model, test_data, threshold = 0.5,
   classified <- ifelse(predictions > threshold, 1, 0)
   confusion_matrix <- table(classified, df_subset_test$Churn)
   accuracy <- sum(diag(confusion_matrix))/nrow(df_subset_test)
-  return(list(classified = classified, accuracy = accuracy, confusion_matrix = confusion_matrix))
+  return(list(classified = classified, accuracy = accuracy, confusion_matrix = confusion_matrix, predictions = predictions))
 }
 
 plot_threshold_accuracy <- function(model, test_data) {
