@@ -3,6 +3,7 @@ library(ggplot2)
 library(DALEX)
 library(DALEXtra)
 
+set.seed(123243)
 
 binary_var <- model.matrix(~train_data_num$Churn)[, -1]
 binary_var1 <- model.matrix(~test_data_num$Churn)[, -1]
@@ -29,20 +30,10 @@ pred <- predict(bst, dtest)
 library(pROC)
 accuracy <- mean((as.numeric(pred > 0.5)) == as.numeric(test_label))
 auc <- auc(roc(test_label, pred))
-f1_score <- function(pred, test_label, threshold) {
-  pred <- as.integer(pred > threshold)
-  tp <- sum((pred == 1) & (test_label == 1))
-  fp <- sum((pred == 1) & (test_label == 0))
-  fn <- sum((pred == 0) & (test_label == 1))
-  precision <- tp / (tp + fp)
-  recall <- tp / (tp + fn)
-  f1 <- 2 * precision * recall / (precision + recall)
-  return(f1)
-}
-f1 <- f1_score(pred, test_label, threshold = 0.5)
-print(accuracy)
-print(f1)
+
+cat("Accuracy:", accuracy, "\n")
 
 library(caret)
 confusion_matrix <- confusionMatrix(as.factor(as.numeric(pred > 0.5)), test_data_num$Churn)
-print(confusion_matrix$table)
+x<-xtable(confusion_matrix$table)
+print(xtable(x),comment = F)
