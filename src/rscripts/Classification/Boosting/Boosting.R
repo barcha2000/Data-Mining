@@ -39,3 +39,4 @@ rownames(confusion_matrix) <- c("Rzeczwiste 0", "Rzeczwiste 1")
 colnames(confusion_matrix) <- c("Estymowane 0", "Estymowane 1")
 x<-xtable(confusion_matrix, caption = "Macierz pomyłek dla boostingu")
 print(xtable(x, caption = "Macierz pomyłek dla boostingu"),comment = F)
+

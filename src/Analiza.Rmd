@@ -8,7 +8,6 @@ output: pdf_document
 ```{r setup, include=FALSE}
 library(reticulate)
 knitr::opts_chunk$set(echo = TRUE)
-use_python("C:/Users/barcha/AppData/Local/Programs/Python/Python38/python.exe")
 ```
 
 ```{r chunk-0, include=FALSE}
@@ -403,6 +402,7 @@ plt.show()
 
 ```
 
+
 Następnie zastosujemy 3 algorytmy wzmacniające. Będą to lasy losowe (Random forest), bagging i boosting. Dla tego pierwszego sprawdzimy również, jak na dokładność działania algorytmu wpłynie ilość drzew.
 
 ## Random Forest
@@ -425,10 +425,10 @@ ggplot(data = results, aes(x = ntrees, y = accuracy)) +
 
 print(xtable(a,caption = "Macierz pomyłek dla lasu losowego"),comment=F)
 
+
 ```
 
 ## Boosting
-
 
 Teraz przejdziemy do metody Boosting. Skorzystamy z bibliotek xgboost i pROC. Dostaliśmy dokładność na poziomie około $0.8$, a z macierzy pomyłek możemy odczytać, że ten model ponownie lepiej poradził sobie z klasyfikacją obserwacji negatywnych, niż pozytywnych.
 
@@ -445,6 +445,4 @@ Ostatnim algorytmem, który zastosujemy, będzie algorytm Bagging. W celu kompil
 ```{r chunk-21, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 source("src/rscripts/Classification/Bagging/Bagging.R", local = knitr::knit_global())
 ```
-
-
 
