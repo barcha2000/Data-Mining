@@ -7,6 +7,7 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = "C:/Users/micha/OneDrive/Pulpit/Data-Mining")
 ```
 
 ```{r chunk-0, include=FALSE}
@@ -299,28 +300,45 @@ W tym przypadku użyliśmy funkcji \textsl{rpart} z pakietu \textsl{rpart}. Na w
 source("src/rscripts/Classification/DecisionTree/DecisionTreeConfusionMatrix.R")
 ```
 
-## Random forest
+Następnie zastosujemy 3 algorytmy wzmacniające. Będą to lasy losowe (Random forest), bagging i boosting. Dla tego pierwszego sprawdzimy również, jak na dokładność działania algorytmu wpłynie ilość drzew.
+
+## Random Forest
+
+Zacznijmy od algorytmu Random Forest. Skorzystamy z funkcji randomForest z biblioteki o tej samej nazwie. Na wykresie widzimy, że najlepsza dokładność predykcji wychodzi dla 23 drzew i wynosi ona nieco ponad $0.8$. Przedstawiamy wyniki tylko dla $n_trees \le 50$, bo dla większej ilości drzew różnica w dokładności jest już znikoma, a znacznie wzrasta złożoność obliczeniowa. Na podstawie tabeli pomyłek widzimy, że nasz model ma tendencję do lepszego klasyfikowania obserwacji negatywnych (0) niż pozytywnych (1). 
 
 ```{r chunk-19, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+set.seed(1213123)
 source("src/rscripts/Classification/RandomForest/RandomForestExecute.R", local = knitr::knit_global())
+
 ggplot(data = results, aes(x = ntrees, y = accuracy)) +
   geom_line() +
-  geom_vline(xintercept = subset(results, accuracy == max(accuracy))$ntrees, color = "red") +
+  geom_vline(xintercept = results$ntrees[which.max(results$accuracy)], color = "black", linetype = "dashed") +
+  geom_point(aes(x = results$ntrees[which.max(results$accuracy)], y = max(results$accuracy)), color = "red", size = 3) +
   ggtitle("Zależność między dokładnością predykcji a ilością drzew w Random Forest") +
   xlab("Ilość drzew") +
-  ylab("Dokładność predykcji")
+  ylab("Dokładność predykcji") +
+  annotate("text", x = results$ntrees[which.max(results$accuracy)], y = max(results$accuracy), label = paste0("max accuracy: ", round(max(results$accuracy), 3)), vjust = -1)
+
+print(xtable(a),comment=F)
 
 ```
 
 ## Boosting
 
+Teraz przejdziemy do metody Boosting. Skorzystamy z bibliotek xgboost i pROC. Dostaliśmy dokładność na poziomie około $0.8$, a z macierzy pomyłek możemy odczytać, że ten model ponownie lepiej poradził sobie z klasyfikacją obserwacji negatywnych, niż pozytywnych.
+
 ```{r chunk-20, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 source("src/rscripts/Classification/Boosting/Boosting.R", local = knitr::knit_global())
 ```
 
+\newpage
+
 ## Bagging
+
+Ostatnim algorytmem, który zastosujemy, będzie algorytm Bagging. W celu kompilacji modelu skorzystamy z biblioteki ipred.Dokładność tego modelu wyszła około $0.79$, czyli nieznacznie mniej, niż w przypadku dwóch poprzednich modeli. Mamy ponownie sytuację, w której model lepiej klasyfikuje klientów, którzy zostali w firmie, niż tych, którzy odeszli.
 
 ```{r chunk-21, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 source("src/rscripts/Classification/Bagging/Bagging.R", local = knitr::knit_global())
 ```
+
 
