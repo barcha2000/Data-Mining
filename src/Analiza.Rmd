@@ -6,8 +6,8 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
+library(reticulate)
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/micha/OneDrive/Pulpit/Data-Mining")
 ```
 
 ```{r chunk-0, include=FALSE}
@@ -300,11 +300,115 @@ W tym przypadku użyliśmy funkcji \textsl{rpart} z pakietu \textsl{rpart}. Na w
 source("src/rscripts/Classification/DecisionTree/DecisionTreeConfusionMatrix.R")
 ```
 
+## SVM
+
+Algorytm SVM zastosowaliśmy z 4 rodzajami jąder: liniowym, wielomianowym (stopień 3), radialnym i sigmoidalnym. W tabelach \ref{tab:SVMlinear} - \ref{tab:SVMsigmoid} widzimy wyniki. Jak widać największą skuteczność otrzymujemy stosując jądro radialne i jest ona na poziomie 0.806. Równie dobrze algorytm działa w przypadku jądra liniowego, gdzie skuteczność wynosi 0.804. W pozostałych przypadkach wyniki są dużo gorsze. 
+
+```{r chunk-22, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/SVM/SVMConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-23, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/SVM/SVMpolynomialConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-24, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/SVM/SVMradialConfusionMatrix.R", local = knitr::knit_global())
+```
+
+```{r chunk-25, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/SVM/SVMsigmoidConfusionMatrix.R", local = knitr::knit_global())
+```
+
+
+```{python chunk-26, eval=FALSE, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.cap="\\label{fig:NeuralNetwork}Skuteczność predykcji dla poszczególnych epok"}
+import pandas as pd
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+train_df = pd.read_csv("train_data.csv", delimiter = None)
+test_df = pd.read_csv("test_data.csv", delimiter = None)
+
+train_df['SeniorCitizen'] = train_df['SeniorCitizen'].map({'Yes': 1, 'No': 0})
+train_df['Partner'] = train_df['Partner'].map({'Yes': 1, 'No': 0})
+train_df['PhoneService'] = train_df['PhoneService'].map({'Yes': 1, 'No': 0})
+train_df['PaperlessBilling'] = train_df['PaperlessBilling'].map({'Yes': 1, 'No': 0})
+train_df['gender'] = train_df['gender'].map({'Male': 1, 'Female': 0})
+train_df['Dependents'] = train_df['Dependents'].map({'Yes': 1, 'No': 0})
+train_df['MultipleLines'] = train_df['MultipleLines'].map({'Yes': 1, 'No': 0, "No phone service": 2})
+train_df['OnlineSecurity'] = train_df['OnlineSecurity'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+train_df['OnlineBackup'] = train_df['OnlineBackup'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+train_df['DeviceProtection'] = train_df['DeviceProtection'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+train_df['TechSupport'] = train_df['TechSupport'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+train_df['StreamingTV'] = train_df['StreamingTV'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+train_df['StreamingMovies'] = train_df['StreamingMovies'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+train_df['InternetService'] = train_df['InternetService'].map({'DSL': 1, 'No': 0, "Fiber optic": 2})
+train_df['Contract'] = train_df['Contract'].map({'One year': 1, 'Month-to-month': 0, "Two year": 2})
+train_df['PaymentMethod'] = train_df['PaymentMethod'].map({'Electronic check': 1, 'Mailed check': 0, "Bank transfer (automatic)": 2, "Credit card (automatic)": 3})
+
+test_df['SeniorCitizen'] = test_df['SeniorCitizen'].map({'Yes': 1, 'No': 0})
+test_df['Partner'] = test_df['Partner'].map({'Yes': 1, 'No': 0})
+test_df['PhoneService'] = test_df['PhoneService'].map({'Yes': 1, 'No': 0})
+test_df['PaperlessBilling'] = test_df['PaperlessBilling'].map({'Yes': 1, 'No': 0})
+test_df['gender'] = test_df['gender'].map({'Male': 1, 'Female': 0})
+test_df['Dependents'] = test_df['Dependents'].map({'Yes': 1, 'No': 0})
+test_df['MultipleLines'] = test_df['MultipleLines'].map({'Yes': 1, 'No': 0, "No phone service": 2})
+test_df['OnlineSecurity'] = test_df['OnlineSecurity'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+test_df['OnlineBackup'] = test_df['OnlineBackup'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+test_df['DeviceProtection'] = test_df['DeviceProtection'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+test_df['TechSupport'] = test_df['TechSupport'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+test_df['StreamingTV'] = test_df['StreamingTV'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+test_df['StreamingMovies'] = test_df['StreamingMovies'].map({'Yes': 1, 'No': 0, "No internet service": 2})
+test_df['InternetService'] = test_df['InternetService'].map({'DSL': 1, 'No': 0, "Fiber optic": 2})
+test_df['Contract'] = test_df['Contract'].map({'One year': 1, 'Month-to-month': 0, "Two year": 2})
+test_df['PaymentMethod'] = test_df['PaymentMethod'].map({'Electronic check': 1, 'Mailed check': 0, "Bank transfer (automatic)": 2, "Credit card (automatic)": 3})
+
+x_train = train_df.drop(['Churn'], axis=1)
+y_train = train_df['Churn']
+
+x_test = test_df.drop(['Churn'], axis=1)
+y_test = test_df['Churn']
+
+model = Sequential() 
+model.add(Dense(512, activation='relu', input_dim=19))
+model.add(Dropout(.3))
+model.add(Dense(64, activation='relu', input_dim=19))
+model.add(Dropout(.3))
+model.add(Dense(1, activation='sigmoid')) 
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']) 
+
+hist = model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=50, batch_size=1000, verbose=0)
+
+sns.set()
+ 
+acc = hist.history['accuracy']
+val = hist.history['val_accuracy']
+epochs = range(1, len(acc) + 1)
+ 
+plt.plot(epochs, acc, '-', label='Training accuracy')
+plt.plot(epochs, val, ':', label='Validation accuracy')
+plt.title('Training and Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend(loc='lower right')
+plt.plot()
+plt.show()
+
+
+
+
+```
+
+
 Następnie zastosujemy 3 algorytmy wzmacniające. Będą to lasy losowe (Random forest), bagging i boosting. Dla tego pierwszego sprawdzimy również, jak na dokładność działania algorytmu wpłynie ilość drzew.
 
 ## Random Forest
 
 Zacznijmy od algorytmu Random Forest. Skorzystamy z funkcji randomForest z biblioteki o tej samej nazwie. Na wykresie widzimy, że najlepsza dokładność predykcji wychodzi dla 23 drzew i wynosi ona nieco ponad $0.8$. Przedstawiamy wyniki tylko dla $n_trees \le 50$, bo dla większej ilości drzew różnica w dokładności jest już znikoma, a znacznie wzrasta złożoność obliczeniowa. Na podstawie tabeli pomyłek widzimy, że nasz model ma tendencję do lepszego klasyfikowania obserwacji negatywnych (0) niż pozytywnych (1). 
+
 
 ```{r chunk-19, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 set.seed(1213123)
@@ -319,7 +423,8 @@ ggplot(data = results, aes(x = ntrees, y = accuracy)) +
   ylab("Dokładność predykcji") +
   annotate("text", x = results$ntrees[which.max(results$accuracy)], y = max(results$accuracy), label = paste0("max accuracy: ", round(max(results$accuracy), 3)), vjust = -1)
 
-print(xtable(a),comment=F)
+print(xtable(a,caption = "Macierz pomyłek dla lasu losowego"),comment=F)
+
 
 ```
 
@@ -340,5 +445,4 @@ Ostatnim algorytmem, który zastosujemy, będzie algorytm Bagging. W celu kompil
 ```{r chunk-21, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 source("src/rscripts/Classification/Bagging/Bagging.R", local = knitr::knit_global())
 ```
-
 

@@ -34,6 +34,9 @@ auc <- auc(roc(test_label, pred))
 cat("Accuracy:", accuracy, "\n")
 
 library(caret)
-confusion_matrix <- confusionMatrix(as.factor(as.numeric(pred > 0.5)), test_data_num$Churn)
-x<-xtable(confusion_matrix$table)
-print(xtable(x),comment = F)
+confusion_matrix <- confusionMatrix(as.factor(as.numeric(pred > 0.5)), test_data_num$Churn)$table
+rownames(confusion_matrix) <- c("Rzeczwiste 0", "Rzeczwiste 1")
+colnames(confusion_matrix) <- c("Estymowane 0", "Estymowane 1")
+x<-xtable(confusion_matrix, caption = "Macierz pomyłek dla boostingu")
+print(xtable(x, caption = "Macierz pomyłek dla boostingu"),comment = F)
+
