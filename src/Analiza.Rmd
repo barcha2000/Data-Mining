@@ -73,7 +73,7 @@ card (automatic))
 
 Wszystkie zmienne są w formie tekstowej, lub binarnej, oprócz trzech zmiennych numerycznych: SeniorCitizen, tenure, MonthlyCharges oraz jednej zmiennej numerycznej typu float: TotalCharges. Na początku dokonamy analizy tych trzech zmiennych numerycznych, wykorzystując podstawowe statystyki.
 
-```{r chunk-0.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis', fig.cap="\\label{fig:Summary}Summary Table", cache=TRUE}
+```{r chunk-0.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis', fig.cap="\\label{fig:Summary}Summary Table"}
 source("src/rscripts/Preprocessing/NumericalAnalysis/NumericalAnalysis.R", local = knitr::knit_global())
 ```
 
@@ -99,29 +99,29 @@ Na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każd
 
 
 
-```{r chunk-1.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis', cache=TRUE}
+```{r chunk-1.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis'}
 source("src/rscripts/Preprocessing/ContinousVariableSummary.R", local = knitr::knit_global())
 ```
 
 Na wykresach \ref{fig:CategorialVariable1}, \ref{fig:CategorialVariable2}, \ref{fig:CategorialVariable3}, \ref{fig:CategorialVariable4} widzimy, że w niektórych przypadkach są duże różnice w ilości obserwacji z każdej kategorii, jeśli chodzi o daną zmienną. W szczególności takimi zmiennymi są \textsl{PhoneService}, czy \textsl{MultipleLines}. Natomiast w znacznej więszkości proporcje klientów, którzy zostali i odeszli są podobne w każdej kategorii. Wyróżniają się tu osoby, które miały miesięczne kontrakty. To głównie one rezygnowały z usług operatora. W przypadku umów długoterminowych takie sytuacje zdarzały się bardzo rzadko. Podobnie wyróżnia się sposób płatności. Prawie połowa osób płacących za pomocą \textsl{electrionic check} odeszła. Oczywiście w innych metodach płatności te liczby nie były aż tak duże. Można też zauważyć, że wśród straconych klientów jest bardzo mało osób, które nie korzystał z usług internetowych. s 
 
-```{r chunk-1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots}Boxploty zmiennych ciągłych", cache=TRUE}
+```{r chunk-1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots}Boxploty zmiennych ciągłych"}
 source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots.R", local = knitr::knit_global())
 ```
 
-```{r chunk-2, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots_Churn}Boxploty zmiennych ciągłych z  podziałem ze względu na Churn", cache=TRUE}
+```{r chunk-2, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots_Churn}Boxploty zmiennych ciągłych z  podziałem ze względu na Churn"}
 source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots_Churn.R", local = knitr::knit_global())
 ```
 
-```{r chunk-3, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Density}Estymator jądrowy gęśtości", cache=TRUE}
+```{r chunk-3, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Density}Estymator jądrowy gęśtości"}
 source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density.R", local = knitr::knit_global())
 ```
 
-```{r chunk-4, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Density_Churn}Estymator jądrowy gęśtości z podziałem ze względu na Churn", cache=TRUE}
+```{r chunk-4, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Density_Churn}Estymator jądrowy gęśtości z podziałem ze względu na Churn"}
 source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density_Churn.R", local = knitr::knit_global())
 ```
 
-```{r chunk-5.1, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable1}Wykres ilości obserwacji z podziałem na kategorie zmiennych", cache=TRUE}
+```{r chunk-5.1, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable1}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
 source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
 cat_cols1 <- WA_Fn_UseC_Telco_Customer_Churn %>%
   select(gender,SeniorCitizen,Partner,Dependents) %>%
@@ -138,7 +138,7 @@ plots1 <- lapply(cat_cols1, function(col) {
 grid.arrange(grobs = plots1, ncol = 2)
 ```
 
-```{r chunk-5.2, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable2}Wykres ilości obserwacji z podziałem na kategorie zmiennych", cache=TRUE}
+```{r chunk-5.2, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable2}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
 source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
 cat_cols2 <- WA_Fn_UseC_Telco_Customer_Churn %>%
   select(PhoneService,MultipleLines,InternetService,OnlineSecurity) %>%
@@ -155,7 +155,7 @@ plots2 <- lapply(cat_cols2, function(col) {
 grid.arrange(grobs = plots2, ncol = 2)
 ```
 
-```{r chunk-5.3, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable3}Wykres ilości obserwacji z podziałem na kategorie zmiennych", cache=TRUE}
+```{r chunk-5.3, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable3}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
 source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
 cat_cols3 <- WA_Fn_UseC_Telco_Customer_Churn %>%
   select(OnlineBackup,DeviceProtection,TechSupport,StreamingTV) %>%
@@ -172,7 +172,7 @@ plots3 <- lapply(cat_cols3, function(col) {
 grid.arrange(grobs = plots3, ncol = 2)
 ```
 
-```{r chunk-5.4, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable4}Wykres ilości obserwacji z podziałem na kategorie zmiennych", cache=TRUE}
+```{r chunk-5.4, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable4}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
 source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
 cat_cols4 <- WA_Fn_UseC_Telco_Customer_Churn %>%
   select(StreamingMovies,Contract,PaperlessBilling,PaymentMethod) %>%
@@ -200,7 +200,7 @@ W naszych danych jest zaledwie 11 obserwacji z brakującymi danymi (na 7033 łą
 
 W tabeli poniżej mamy macierz korelacji zmiennych ciągłych. Jak widać istnieje mocna korelacja pomiędzy tym jak długo klient korzysta/korzystał z usług, a kwotą jaką zapłacił za usługi. Nie powinno to dziwić. Na razie jednak nie decydujemy się na wyrzucenie którejś ze zmiennych, ponieważ zarówno czas jak i koszt może być istotny w kontekście odchodzenia klientów. Te dwie rzeczy nie muszą być ze sobą powiązane w pełni. Może być tak, że odchodzą głównie nowi klienci, niezależnie od tego ile płacą. Albo może być tak, że odchodzą klienci, którzy zapłacili rachunki powyżej pewnej sumy, niekoniecznie będący długo/krótko stażem.
 
-```{r chunk-7, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', cache=TRUE}
+```{r chunk-7, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 source("src/rscripts/Preprocessing/CorrelationAnalysis/ContiniousVariableCorrelation.R", local = knitr::knit_global())
 ```
 
@@ -215,7 +215,7 @@ Zacznijmy od metod, w których bierzemy pod uwagę jedynie zmienne ciągłe. Na 
 
 Zastanówmy się jeszcze jaki wpływ miały poszczególne zmienne w modelu. W tym celu przyjrzyjmy się współczynnikom w modelu (wykres \ref{fig:LinearRegressionCoefficientPlot}). Nie ma tam stałej, ponieważ nie ma ona wpływu na model (i tak później ustalamy punkt odcięcia). Widać natomiast, że największy wpływ na to że ktoś jest sklasyfikowany z \textsl{Churn}=1, ma zmienna \textsl{MonthlyCharges}. Im większe miesięczne opłaty, tym większe prawdopodobieństwo że osoba zrezygnuje z umowy. Odwrotnie jest w przypadku łącznych opłat i stażu klienta, które to zmienne zwiększają prawdopodobieństwo aby obserwacja była zakwalifikowana \textsl{Churn}=0.
 
-```{r chunk-8, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia", cache=TRUE}
+```{r chunk-8, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
 source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
 source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
@@ -227,7 +227,7 @@ plot_threshold_accuracy(linear_regression_model, test_data)
 source("src/rscripts/Classification/LinearRegression/LinearRegressionConfusionMatrix.R", local = knitr::knit_global())
 ```
 
-```{r chunk-10, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej", cache=TRUE}
+```{r chunk-10, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
 source("src/rscripts/Classification/LinearRegression/LinearRegression.R")
 source("src/rscripts/Classification/LinearRegression/LinearRegressionExecute.R")
@@ -241,7 +241,7 @@ plot_regression_coefficients(linear_regression_model)
 
 Teraz model regresji logistycznej. Standardowo, wzięliśmy pod uwagę wszystkie zmienne i zbudowaliśmy model z domyślnymi parametrami. Punkt odcięcia wybraliśmy testując skuteczności przy różnych wartościach. Na wykresie \ref{fig:LogisticRegressionPlotAccuracy} widzimy, że najskuteczniejszy był model z punktem odcięcia równym 0.52. Z tabeli \ref{tab:LinearRegression} widzimy, że skuteczność wynosi niemal dokładnie 0.82. Można się jeszcze  przyjrzeć współczynnikom modelu. Na ich podstawie widzimy, że największy wpływ oprócz \textsl{MonthlyCharges} i \textsl{tenure} mają zmienne \textsl{InternetServiceFiber} i  \textsl{InternetService}. 
 
-```{r chunk-11, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia", cache=TRUE}
+```{r chunk-11, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
 source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
 source("src/rscripts/Classification/LogisticRegression/LogisticRegression.R")
@@ -252,7 +252,7 @@ plot_threshold_accuracy(logistic_regression_model, test_data)
 source("src/rscripts/Classification/LogisticRegression/LogisticRegressionConfusionMatrix.R", local = knitr::knit_global())
 ```
 
-```{r chunk-13, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej", cache=TRUE}
+```{r chunk-13, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionCoefficientPlot}wartości współczynników w modelu regresji logistycznej"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
 source("src/rscripts/Classification/LogisticRegression/LogisticRegression.R")
 source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
@@ -272,7 +272,7 @@ source("src/rscripts/Classification/NaiveBayes/NaiveBayesConfusionMatrix.R", loc
 
 W tym przypadku użyliśmy funkcji \textsl{knn} z pakietu \textsl{class}. Przeprowadziliśmy symulacje dla wszystkich wartości k od 1 do 100. Najlepszy model powstał dla k równego 48 (wykres \ref{fig:kNNPlotAccuracy}). Jego skuteczność wyniosła 0.806. W tabeli \ref{tab:kNN} widzimy, że po raz pierwszy mamy sytuacje kiedy obiekty, które w rzeczywistości mają \textsl{Churn}=1 są cześciej błędnie klasyfikowane niż obiekty z \textsl{Churn}=0. 
 
-```{r chunk-15, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:kNNPlotAccuracy}Skuteczność predykcji dla poszczególnych wartości k", cache=TRUE}
+```{r chunk-15, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:kNNPlotAccuracy}Skuteczność predykcji dla poszczególnych wartości k"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
 source("src/rscripts/Classification/kNN/kNN.R")
 source("src/rscripts/Classification/kNN/kNNExecute.R")
@@ -289,7 +289,7 @@ source("src/rscripts/Classification/kNN/kNNConfusionMatrix.R", local = knitr::kn
 
 W tym przypadku użyliśmy funkcji \textsl{rpart} z pakietu \textsl{rpart}. Na wykresie poniżej widzimy jakie zmienne warunkowały kolejne przejścia w drzewie. Natomiast macierz pomyłek \ref{tab:DecisionTree} wskazuje, że skuteczność wyniosła 0.79. Oczywiście pjedyncze drzewo jest bardzo niestabilne, dlatego zastosujemy też metody ze wzmocnieniem.
 
-```{r chunk-17, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:DecisionTree}Drzewo dezycyjne", results='hide', cache=TRUE}
+```{r chunk-17, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:DecisionTree}Drzewo dezycyjne", results='hide'}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
 #source("src/rscripts/Classification/DecisionTree/DecisionTreeExecute.R")
 
@@ -299,31 +299,6 @@ W tym przypadku użyliśmy funkcji \textsl{rpart} z pakietu \textsl{rpart}. Na w
 ```{r chunk-18, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
 source("src/rscripts/Classification/DecisionTree/DecisionTreeConfusionMatrix.R")
-```
-
-## Random forest
-
-```{r chunk-19, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', cache=TRUE}
-source("src/rscripts/Classification/RandomForest/RandomForestExecute.R", local = knitr::knit_global())
-ggplot(data = results, aes(x = ntrees, y = accuracy)) +
-  geom_line() +
-  geom_vline(xintercept = subset(results, accuracy == max(accuracy))$ntrees, color = "red") +
-  ggtitle("Zależność między dokładnością predykcji a ilością drzew w Random Forest") +
-  xlab("Ilość drzew") +
-  ylab("Dokładność predykcji")
-
-```
-
-## Boosting
-
-```{r chunk-20, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', cache=TRUE}
-source("src/rscripts/Classification/Boosting/Boosting.R", local = knitr::knit_global())
-```
-
-## Bagging
-
-```{r chunk-21, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', cache=TRUE}
-source("src/rscripts/Classification/Bagging/Bagging.R", local = knitr::knit_global())
 ```
 
 ## SVM
@@ -346,9 +321,8 @@ source("src/rscripts/Classification/SVM/SVMradialConfusionMatrix.R", local = kni
 source("src/rscripts/Classification/SVM/SVMsigmoidConfusionMatrix.R", local = knitr::knit_global())
 ```
 
-## Sieci Neuronowe
 
-```{python chunk-26, eval=FALSE, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.cap="\\label{fig:NeuralNetwork}Skuteczność predykcji dla poszczególnych epok", cache=TRUE}
+```{python chunk-26, eval=FALSE, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis', fig.cap="\\label{fig:NeuralNetwork}Skuteczność predykcji dla poszczególnych epok"}
 import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
@@ -428,3 +402,49 @@ plt.show()
 
 
 ```
+
+Następnie zastosujemy 3 algorytmy wzmacniające. Będą to lasy losowe (Random forest), bagging i boosting. Dla tego pierwszego sprawdzimy również, jak na dokładność działania algorytmu wpłynie ilość drzew.
+
+## Random Forest
+
+Zacznijmy od algorytmu Random Forest. Skorzystamy z funkcji randomForest z biblioteki o tej samej nazwie. Na wykresie widzimy, że najlepsza dokładność predykcji wychodzi dla 23 drzew i wynosi ona nieco ponad $0.8$. Przedstawiamy wyniki tylko dla $n_trees \le 50$, bo dla większej ilości drzew różnica w dokładności jest już znikoma, a znacznie wzrasta złożoność obliczeniowa. Na podstawie tabeli pomyłek widzimy, że nasz model ma tendencję do lepszego klasyfikowania obserwacji negatywnych (0) niż pozytywnych (1). 
+
+
+```{r chunk-19, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+set.seed(1213123)
+source("src/rscripts/Classification/RandomForest/RandomForestExecute.R", local = knitr::knit_global())
+
+ggplot(data = results, aes(x = ntrees, y = accuracy)) +
+  geom_line() +
+  geom_vline(xintercept = results$ntrees[which.max(results$accuracy)], color = "black", linetype = "dashed") +
+  geom_point(aes(x = results$ntrees[which.max(results$accuracy)], y = max(results$accuracy)), color = "red", size = 3) +
+  ggtitle("Zależność między dokładnością predykcji a ilością drzew w Random Forest") +
+  xlab("Ilość drzew") +
+  ylab("Dokładność predykcji") +
+  annotate("text", x = results$ntrees[which.max(results$accuracy)], y = max(results$accuracy), label = paste0("max accuracy: ", round(max(results$accuracy), 3)), vjust = -1)
+
+print(xtable(a,caption = "Macierz pomyłek dla lasu losowego"),comment=F)
+
+```
+
+## Boosting
+
+
+Teraz przejdziemy do metody Boosting. Skorzystamy z bibliotek xgboost i pROC. Dostaliśmy dokładność na poziomie około $0.8$, a z macierzy pomyłek możemy odczytać, że ten model ponownie lepiej poradził sobie z klasyfikacją obserwacji negatywnych, niż pozytywnych.
+
+```{r chunk-20, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/Boosting/Boosting.R", local = knitr::knit_global())
+```
+
+\newpage
+
+## Bagging
+
+Ostatnim algorytmem, który zastosujemy, będzie algorytm Bagging. W celu kompilacji modelu skorzystamy z biblioteki ipred.Dokładność tego modelu wyszła około $0.79$, czyli nieznacznie mniej, niż w przypadku dwóch poprzednich modeli. Mamy ponownie sytuację, w której model lepiej klasyfikuje klientów, którzy zostali w firmie, niż tych, którzy odeszli.
+
+```{r chunk-21, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+source("src/rscripts/Classification/Bagging/Bagging.R", local = knitr::knit_global())
+```
+
+
+

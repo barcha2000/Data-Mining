@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.26)  7 MAY 2023 16:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.26)  7 MAY 2023 17:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -408,110 +408,110 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 159.
 
-LaTeX Warning: Reference `fig:Summary' on page 2 undefined on input line 174.
+LaTeX Warning: Reference `fig:Summary' on page 2 undefined on input line 175.
 
 [2]
-<Analiza_files/figure-latex/chunk-1-1.pdf, id=97, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-1-1.pdf, id=93, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-1-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-1-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-1-1.pdf  used on input line 281.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-1-1.pdf  used on input line 282.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-2-1.pdf, id=98, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-2-1.pdf, id=94, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-2-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-2-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-2-1.pdf  used on input line 287.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-2-1.pdf  used on input line 288.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-3-1.pdf, id=99, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-3-1.pdf, id=95, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-3-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-3-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-3-1.pdf  used on input line 294.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-3-1.pdf  used on input line 295.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-4-1.pdf, id=100, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-4-1.pdf, id=96, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-4-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-4-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-4-1.pdf  used on input line 300.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-4-1.pdf  used on input line 301.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-5.1-1.pdf, id=101, 578.16pt x 722.7pt>
+<Analiza_files/figure-latex/chunk-5.1-1.pdf, id=97, 578.16pt x 722.7pt>
 File: Analiza_files/figure-latex/chunk-5.1-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-5.1-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.1-1.pdf  used on input line 307.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.1-1.pdf  used on input line 308.
 (pdftex.def)             Requested size: 469.75385pt x 587.1923pt.
-<Analiza_files/figure-latex/chunk-5.2-1.pdf, id=102, 578.16pt x 722.7pt>
+<Analiza_files/figure-latex/chunk-5.2-1.pdf, id=98, 578.16pt x 722.7pt>
 File: Analiza_files/figure-latex/chunk-5.2-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-5.2-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.2-1.pdf  used on input line 314.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.2-1.pdf  used on input line 315.
 (pdftex.def)             Requested size: 469.75385pt x 587.1923pt.
-<Analiza_files/figure-latex/chunk-5.3-1.pdf, id=103, 578.16pt x 722.7pt>
+<Analiza_files/figure-latex/chunk-5.3-1.pdf, id=99, 578.16pt x 722.7pt>
 File: Analiza_files/figure-latex/chunk-5.3-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-5.3-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.3-1.pdf  used on input line 321.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.3-1.pdf  used on input line 322.
 (pdftex.def)             Requested size: 469.75385pt x 587.1923pt.
-<Analiza_files/figure-latex/chunk-5.4-1.pdf, id=104, 578.16pt x 722.7pt>
+<Analiza_files/figure-latex/chunk-5.4-1.pdf, id=100, 578.16pt x 722.7pt>
 File: Analiza_files/figure-latex/chunk-5.4-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-5.4-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.4-1.pdf  used on input line 328.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-5.4-1.pdf  used on input line 329.
 (pdftex.def)             Requested size: 469.75385pt x 587.1923pt.
 [3] [4 <./Analiza_files/figure-latex/chunk-1-1.pdf>] [5 <./Analiza_files/figure-latex/chunk-2-1.pdf>] [6 <./Analiza_files/figure-latex/chunk-3-1.pdf>] [7 <./Analiza_files/figure-latex/chunk-4-1.pdf>] [8 <./Analiza_files/figure-latex/chunk-5.1-1.pdf>] [9 <./Analiza_files/figure-latex/chunk-5.2-1.pdf>] [10 <./Analiza_files/figure-latex/chunk-5.3-1.pdf>] [11 <./Analiza_files/figure-latex/chunk-5.4-1.pdf>]
-<Analiza_files/figure-latex/chunk-8-1.pdf, id=202, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-8-1.pdf, id=198, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-8-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-8-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-8-1.pdf  used on input line 411.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-8-1.pdf  used on input line 412.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-10-1.pdf, id=203, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-10-1.pdf, id=199, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-10-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-10-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-10-1.pdf  used on input line 432.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-10-1.pdf  used on input line 433.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
 [12
 
 ] [13 <./Analiza_files/figure-latex/chunk-8-1.pdf>] [14 <./Analiza_files/figure-latex/chunk-10-1.pdf>]
-<Analiza_files/figure-latex/chunk-11-1.pdf, id=236, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-11-1.pdf, id=232, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-11-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-11-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-11-1.pdf  used on input line 453.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-11-1.pdf  used on input line 454.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-13-1.pdf, id=237, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-13-1.pdf, id=233, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-13-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-13-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-13-1.pdf  used on input line 474.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-13-1.pdf  used on input line 475.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
 [15 <./Analiza_files/figure-latex/chunk-11-1.pdf>] [16 <./Analiza_files/figure-latex/chunk-13-1.pdf>]
-<Analiza_files/figure-latex/chunk-15-1.pdf, id=265, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-15-1.pdf, id=261, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-15-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-15-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-15-1.pdf  used on input line 514.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-15-1.pdf  used on input line 515.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-<Analiza_files/figure-latex/chunk-18-1.pdf, id=267, 578.16pt x 433.62pt>
+<Analiza_files/figure-latex/chunk-18-1.pdf, id=263, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-18-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-18-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-18-1.pdf  used on input line 543.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-18-1.pdf  used on input line 544.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-[17 <./Analiza_files/figure-latex/chunk-15-1.pdf>]
-<Analiza_files/figure-latex/chunk-19-1.pdf, id=282, 578.16pt x 433.62pt>
+[17 <./Analiza_files/figure-latex/chunk-15-1.pdf>] [18 <./Analiza_files/figure-latex/chunk-18-1.pdf>]
+<Analiza_files/figure-latex/chunk-19-1.pdf, id=295, 578.16pt x 433.62pt>
 File: Analiza_files/figure-latex/chunk-19-1.pdf Graphic file (type pdf)
 <use Analiza_files/figure-latex/chunk-19-1.pdf>
-Package pdftex.def Info: Analiza_files/figure-latex/chunk-19-1.pdf  used on input line 574.
+Package pdftex.def Info: Analiza_files/figure-latex/chunk-19-1.pdf  used on input line 642.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
-[18 <./Analiza_files/figure-latex/chunk-18-1.pdf>] [19 <./Analiza_files/figure-latex/chunk-19-1.pdf>] [20] (./Analiza.aux)
+[19 <./Analiza_files/figure-latex/chunk-19-1.pdf>] [20] [21] (./Analiza.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `Analiza.out' has not changed.
-(rerunfilecheck)             Checksum: 2F3FFCDBB874DE9EC4B7EEB2D36A91EC;1963.
+(rerunfilecheck)             Checksum: C185951D09818767BA59BB2B6C624932;1829.
  ) 
 Here is how much of TeX's memory you used:
- 10675 strings out of 477990
- 170579 string characters out of 5837598
+ 10676 strings out of 477990
+ 170567 string characters out of 5837598
  1863299 words of memory out of 5000000
- 30580 multiletter control sequences out of 15000+600000
+ 30579 multiletter control sequences out of 15000+600000
  560597 words of font info for 71 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
  75i,8n,76p,312b,462s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro10.pfb>
-Output written on Analiza.pdf (20 pages, 311587 bytes).
+{c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}<c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro10.pfb><c:/Users/barcha/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
+Output written on Analiza.pdf (21 pages, 326447 bytes).
 PDF statistics:
- 366 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
- 75 named destinations out of 1000 (max. 500000)
- 204 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 390 PDF objects out of 1000 (max. 8388607)
+ 314 compressed objects within 4 object streams
+ 77 named destinations out of 1000 (max. 500000)
+ 196 words of extra memory for PDF output out of 10000 (max. 10000000)
 
