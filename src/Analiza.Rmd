@@ -7,7 +7,6 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = "C:/Users/micha/OneDrive/Pulpit/Data-Mining")
 ```
 
 ```{r chunk-0, include=FALSE}
@@ -92,13 +91,17 @@ Spójrzmy teraz na pozostałe zmienne. Na podstawie rozkładu zmiennych w poszcz
 Z powyższych danych można wywnioskować, że firma powinna skupić się na promowaniu usługi internetu szerokopasmowego oraz usługi ochrony urządzeń, aby zwiększyć liczbę klientów korzystających z tych usług. Dodatkowo, firma powinna zastanowić się nad przyczynami, dla których tak mało klientów korzysta z faktury elektronicznej i ewentualnie wdrożyć działania promocyjne, zachęcające do korzystania z tej formy rozliczenia.
 
 ## Wykresy 
-Następnie przejdźmy do analizy wykresów. Na początek zmienne ciągłe. Na wykresie \ref{fig:Boxplots} i \ref{fig:Density} widzimy, że zmienne te są w znacząco różnych skalach, więc prawdopodobnie potrzebna będzie normalizacja. Natomiast na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każda ze zmiennych ma istotnie różny rozkład, gdy pogrupujemy ją ze względu na Churn.
+Zacznijmy od analizy wykresów. Na początek zmienne ciągłe. Na wykresach \ref{fig:Boxplots} i \ref{fig:Density} oraz w tabeli poniżej widzimy, że zmienne te są w znacząco różnych skalach, więc prawdopodobnie potrzebna będzie normalizacja. Zmienna \textsl{tenure}, a więc czas jaki dana osoba była/jest klientem, waha się od 1 do 72 miesięcy. Przy czym jej rozkład jest dwumodalny. Teoretycznie powinno się wydawać, że rozkład tej zmiennej powinien mieć charakter podobny do rozkładów z rodziny Gamma (np. rozkładu wykładniczego). W końcu każdy klient po pewnym czasie odchodzi, a więc w miarę upływu czasu klientów ubywa. Być może jednak jakieś procesy rynkowe spowodowały, że mamy liczniejszą grupę klientów ze stażem ok. 70 miesięcy (np. 70 miesięcy temu dana firma proponowała bardzo korzystne umowy). Kolejną zmienną jest \textsl{MonthlyCharges}. Jej estymowany rozkład jest bardzo nieregularny. Ma kilka maksimów lokalnych. Występują one w okolicach okrągłych liczb, takich jak 50 czy 80. Zapewne są związane z jakimiś limitami, które posiadają klienci, gdyż najczęściej nie przekraczają tych klejnych dziesiątek, albo mówiąc inaczej cyfra 9 pojawia się tu nadzwyczaj często jako cyfra jedności. Na koniec zostaje jeszcze \textsl{TotalCharges}. Zmienna ta ma spodziwany rozkład, tzn. przypomina on swoim kształtem rozkład Gamma. Wartości tej zmiennej są dużo większe od pierwszych dwóch, dlatego przeprowadzimy normalizacje danych przed ich użyciem.
+
+Na wykresie \ref{fig:Boxplots_Churn} i \ref{fig:Density_Churn} widać, że każda ze zmiennych ma istotnie różny rozkład, gdy pogrupujemy ją ze względu na Churn. Najbardziej wyróżnia się \textsl{tenure}, gdzie widać że odchodzili głównie nowi klienci. Podobnie odchodzili głównie klienci, których łączne opłaty były stosunkowo niskie, ale wynika to z korelacji zmiennej \textsl{TotalCharges} ze zmienną \textsl{tenure} (opiszemy to później). Natomiast jeśli chodzi o \textsl{MonthlyCharges}, to klienci, którzy odeszli, przeważają wśród tych co płacili większe miesięczne rachunki, co nie dziwi. 
+
+
 
 ```{r chunk-1.1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE,results='asis'}
-#source("src/rscripts/Preprocessing/ContinousVariableSummary.R", local = knitr::knit_global())
+source("src/rscripts/Preprocessing/ContinousVariableSummary.R", local = knitr::knit_global())
 ```
 
-Z kolei na \ref{fig:CategorialVariable} widzimy, że w niektórych przypadkach są duże różnice w ilości obserwacji z każdej kategorii, jeśli chodzi o daną zmienną. W szczególności takimi zmiennymi są \textsl{PhoneService}, czy \textsl{MultipleLines}.
+Na wykresach \ref{fig:CategorialVariable1}, \ref{fig:CategorialVariable2}, \ref{fig:CategorialVariable3}, \ref{fig:CategorialVariable4} widzimy, że w niektórych przypadkach są duże różnice w ilości obserwacji z każdej kategorii, jeśli chodzi o daną zmienną. W szczególności takimi zmiennymi są \textsl{PhoneService}, czy \textsl{MultipleLines}. Natomiast w znacznej więszkości proporcje klientów, którzy zostali i odeszli są podobne w każdej kategorii. Wyróżniają się tu osoby, które miały miesięczne kontrakty. To głównie one rezygnowały z usług operatora. W przypadku umów długoterminowych takie sytuacje zdarzały się bardzo rzadko. Podobnie wyróżnia się sposób płatności. Prawie połowa osób płacących za pomocą \textsl{electrionic check} odeszła. Oczywiście w innych metodach płatności te liczby nie były aż tak duże. Można też zauważyć, że wśród straconych klientów jest bardzo mało osób, które nie korzystał z usług internetowych. s 
 
 ```{r chunk-1, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:Boxplots}Boxploty zmiennych ciągłych"}
 source("src/rscripts/Preprocessing/Plots/ContinousVariable/Boxplots.R", local = knitr::knit_global())
@@ -116,49 +119,82 @@ source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density.R", local = k
 source("src/rscripts/Preprocessing/Plots/ContinousVariable/Density_Churn.R", local = knitr::knit_global())
 ```
 
+```{r chunk-5.1, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable1}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
+source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+cat_cols1 <- WA_Fn_UseC_Telco_Customer_Churn %>%
+  select(gender,SeniorCitizen,Partner,Dependents) %>%
+  keep(is.character) %>% 
+  names()
+plots1 <- lapply(cat_cols1, function(col) {
+  p <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col, fill = WA_Fn_UseC_Telco_Customer_Churn$Churn)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    labs(title = col)
+  # dodanie etykiet z liczbą obserwacji
+  p + geom_text(stat='count', aes(label=..count..), position=position_stack(0.5))
+})
+grid.arrange(grobs = plots1, ncol = 2)
+```
 
-```{r chunk-5, fig.width=8, fig.height=12, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
-#out.extra='angle=90'
+```{r chunk-5.2, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable2}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
+source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+cat_cols2 <- WA_Fn_UseC_Telco_Customer_Churn %>%
+  select(PhoneService,MultipleLines,InternetService,OnlineSecurity) %>%
+  keep(is.character) %>% 
+  names()
+plots2 <- lapply(cat_cols2, function(col) {
+  p <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col, fill = WA_Fn_UseC_Telco_Customer_Churn$Churn)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    labs(title = col)
+  # dodanie etykiet z liczbą obserwacji
+  p + geom_text(stat='count', aes(label=..count..), position=position_stack(0.5))
+})
+grid.arrange(grobs = plots2, ncol = 2)
+```
 
-#source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+```{r chunk-5.3, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable3}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
+source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+cat_cols3 <- WA_Fn_UseC_Telco_Customer_Churn %>%
+  select(OnlineBackup,DeviceProtection,TechSupport,StreamingTV) %>%
+  keep(is.character) %>% 
+  names()
+plots3 <- lapply(cat_cols3, function(col) {
+  p <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col, fill = WA_Fn_UseC_Telco_Customer_Churn$Churn)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    labs(title = col)
+  # dodanie etykiet z liczbą obserwacji
+  p + geom_text(stat='count', aes(label=..count..), position=position_stack(0.5))
+})
+grid.arrange(grobs = plots3, ncol = 2)
+```
 
-library(ggplot2)
-library(ggpubr)
-library(gridExtra)
-library(dplyr)
-library(purrr)
-library(tidyr)
-
-# Wybór zmiennych kategorycznych
-library(ggplot2)
-library(ggpubr)
-library(gridExtra)
-library(dplyr)
-library(purrr)
-
-# Wybór zmiennych kategorycznych
-
-cat_cols <- WA_Fn_UseC_Telco_Customer_Churn %>%
-  select(-customerID, -tenure, -MonthlyCharges, -TotalCharges, -Churn) %>%
+```{r chunk-5.4, fig.width=8, fig.height=10, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:CategorialVariable4}Wykres ilości obserwacji z podziałem na kategorie zmiennych"}
+source("src/rscripts/Preprocessing/Plots/CategoricalVariable/CategoricalVariablePlots.R", local = knitr::knit_global())
+cat_cols4 <- WA_Fn_UseC_Telco_Customer_Churn %>%
+  select(StreamingMovies,Contract,PaperlessBilling,PaymentMethod) %>%
   keep(is.character) %>% 
   names()
 
-# Barploty dla zmiennych kategorycznych
-
-plots <- lapply(cat_cols, function(col) {
-  ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col)) +
-    geom_bar(fill = "lightblue")
+plots4 <- lapply(cat_cols4, function(col) {
+  p <- ggplot(WA_Fn_UseC_Telco_Customer_Churn, aes_string(x = col, fill = WA_Fn_UseC_Telco_Customer_Churn$Churn)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+    labs(title = col)
+  # dodanie etykiet z liczbą obserwacji
+  p + geom_text(stat='count', aes(label=..count..), position=position_stack(0.5))
 })
-
-grid.arrange(grobs = plots, ncol = 4)
-
+grid.arrange(grobs = plots4, ncol = 2)
 ```
+
+
 
 \clearpage
 
 ## Interpretacja Wyników
 
-W naszych danych jest zaledwie 11 obserwacji z brakującymi danymi (na 7033 łącznie). Zatem zasadne jest pominięcie ich w trakcie analizy danych. Nie stosujemy żadnej imputacji. Ilość danych może być obciążająca dla niektórych modeli. Jeśli będą występowały problemy ze złożonością obliczeniową, to dla konkretnego modelu będziemy decydować o przeprowadzeniu analizy dla ewentualnego podzbioru danych.
+W naszych danych jest zaledwie 11 obserwacji z brakującymi danymi (na 7033 łącznie). Zatem zasadne jest pominięcie ich w trakcie analizy danych. Nie stosujemy żadnej imputacji. Ilość danych wydaje się odpowiednia ilościowo (nie za mała i nie za duża). W analizie dokonujemy losowego podziału na zbiór treningowy i testowy. 
 
 W tabeli poniżej mamy macierz korelacji zmiennych ciągłych. Jak widać istnieje mocna korelacja pomiędzy tym jak długo klient korzysta/korzystał z usług, a kwotą jaką zapłacił za usługi. Nie powinno to dziwić. Na razie jednak nie decydujemy się na wyrzucenie którejś ze zmiennych, ponieważ zarówno czas jak i koszt może być istotny w kontekście odchodzenia klientów. Te dwie rzeczy nie muszą być ze sobą powiązane w pełni. Może być tak, że odchodzą głównie nowi klienci, niezależnie od tego ile płacą. Albo może być tak, że odchodzą klienci, którzy zapłacili rachunki powyżej pewnej sumy, niekoniecznie będący długo/krótko stażem.
 
@@ -167,13 +203,15 @@ source("src/rscripts/Preprocessing/CorrelationAnalysis/ContiniousVariableCorrela
 ```
 
 
-Najprawdopodbniej potrzebne będzie wykonanie transformacji danych, w szczególności normalizacji. Natomiast jeśli chodzi o obserwacje odstające, to nie ma ich za dużo. Pojawiają się licznie w przypadku zmiennej \textsl{TotalCharges} pogrupowanej ze względu na \textsl{Churn}. Widać, że jest tendencja, aby odchodzący klienci należej do jednej z dwóch grup. Są albo nowymi klientami, albo klientami z dużym stażem. Ta druga grupa jest na wykresie pudełkowym interpertowana jako obserwacje odstające. W rzeczywistości należy to interpretować tak, że rozkład tej zmiennej jest dwumodalny,nie będziemy stosować technik mających na celu ignorowanie lub zmniejszenie wpływu tych obserwacji, znacząco odbiegających od reszty.
+Potrzebne będzie wykonanie transformacji danych, w szczególności normalizacji. Natomiast jeśli chodzi o obserwacje odstające, to nie ma ich za dużo. Pojawiają się licznie w przypadku zmiennej \textsl{TotalCharges} pogrupowanej ze względu na \textsl{Churn}. Widać, że jest tendencja, aby odchodzący klienci należej do jednej z dwóch grup. Są albo nowymi klientami, albo klientami z dużym stażem. Ta druga grupa jest na wykresie pudełkowym interpertowana jako obserwacje odstające. W rzeczywistości należy to interpretować tak, że rozkład tej zmiennej jest dwumodalny,nie będziemy stosować technik mających na celu ignorowanie lub zmniejszenie wpływu tych obserwacji, znacząco odbiegających od reszty.
 
 # Klasyfikacja
 
 ## Regresja Liniowa
 
-Zacznijmy od metod, w których bierzemy pod uwagę jedynie zmienne ciągłe. Na początek regresja liniowa. 
+Zacznijmy od metod, w których bierzemy pod uwagę jedynie zmienne ciągłe. Na początek regresja liniowa. Zastosowaliśmy model regresji liniowej, który bierze pod uwagę 3 zmienne ciągłe, jako zmienne objaśniające i \textsl{Churn}, jako zmienną objaśnianą. Otrzymane w ten sposób wartości dzielimy na dwie grupy stosując punkt odcięcia na ustalonym poziomie. Na wykresie \ref{fig:LinearRegressionPlotAccuracy} widzimy skuteczność predykcji dla punktów odcięcia pomiędzy 1 i 2. Wybieramy ten z największą skutecznością i sprawdzamy jak wygląda macierz pomyłek dla niego (\ref{tab:LinearRegression}). Jak widać osiągamy w ten sposób całkiem niezłą skuteczność na poziomie 0.7978648, co jest o ok. 0.05 więcej niż, gdybyśmy estymowali każdą obserwacje do liczniejszej klasy.
+
+Zastanówmy się jeszcze jaki wpływ miały poszczególne zmienne w modelu. W tym celu przyjrzyjmy się współczynnikom w modelu (wykres \ref{fig:LinearRegressionCoefficientPlot}). Nie ma tam stałej, ponieważ nie ma ona wpływu na model (i tak później ustalamy punkt odcięcia). Widać natomiast, że największy wpływ na to że ktoś jest sklasyfikowany z \textsl{Churn}=1, ma zmienna \textsl{MonthlyCharges}. Im większe miesięczne opłaty, tym większe prawdopodobieństwo że osoba zrezygnuje z umowy. Odwrotnie jest w przypadku łącznych opłat i stażu klienta, które to zmienne zwiększają prawdopodobieństwo aby obserwacja była zakwalifikowana \textsl{Churn}=0.
 
 ```{r chunk-8, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LinearRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
@@ -199,6 +237,8 @@ plot_regression_coefficients(linear_regression_model)
 
 ## Regresja Logistyczna
 
+Teraz model regresji logistycznej. Standardowo, wzięliśmy pod uwagę wszystkie zmienne i zbudowaliśmy model z domyślnymi parametrami. Punkt odcięcia wybraliśmy testując skuteczności przy różnych wartościach. Na wykresie \ref{fig:LogisticRegressionPlotAccuracy} widzimy, że najskuteczniejszy był model z punktem odcięcia równym 0.52. Z tabeli \ref{tab:LinearRegression} widzimy, że skuteczność wynosi niemal dokładnie 0.82. Można się jeszcze  przyjrzeć współczynnikom modelu. Na ich podstawie widzimy, że największy wpływ oprócz \textsl{MonthlyCharges} i \textsl{tenure} mają zmienne \textsl{InternetServiceFiber} i  \textsl{InternetService}. 
+
 ```{r chunk-11, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:LogisticRegressionPlotAccuracy}Skuteczność predykcji dla poszczególnych punktów odcięcia"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
 source("src/rscripts/Classification/LogisticRegression/LogisticRegressionExecute.R")
@@ -219,12 +259,16 @@ plot_regression_coefficients(logistic_regression_model)
 
 ## Algorytm Naiwnego Bayesa
 
+Zastosowaliśmy również Naive Bayes Algorithm z domyślnymi parametrami (funkcja \textsl{NaiveBayes} z pakietu \textsl{klaR}). Nie dał on jednak zbyt dobrych rezultatów. W tabeli \ref{tab:NaiveBayes} widzimy, że skutecznośc tego modelu wyniosła zaledwie 0.76.
+
 ```{r chunk-14, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionCoefficientPlot.R", local = knitr::knit_global())
 source("src/rscripts/Classification/NaiveBayes/NaiveBayesConfusionMatrix.R", local = knitr::knit_global())
 ```
 
 ## Algorytm k sąsiadów
+
+W tym przypadku użyliśmy funkcji \textsl{knn} z pakietu \textsl{class}. Przeprowadziliśmy symulacje dla wszystkich wartości k od 1 do 100. Najlepszy model powstał dla k równego 48 (wykres \ref{fig:kNNPlotAccuracy}). Jego skuteczność wyniosła 0.806. W tabeli \ref{tab:kNN} widzimy, że po raz pierwszy mamy sytuacje kiedy obiekty, które w rzeczywistości mają \textsl{Churn}=1 są cześciej błędnie klasyfikowane niż obiekty z \textsl{Churn}=0. 
 
 ```{r chunk-15, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:kNNPlotAccuracy}Skuteczność predykcji dla poszczególnych wartości k"}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())
@@ -240,6 +284,8 @@ source("src/rscripts/Classification/kNN/kNNConfusionMatrix.R", local = knitr::kn
 ```
 
 ## Drzewo decyzyjne
+
+W tym przypadku użyliśmy funkcji \textsl{rpart} z pakietu \textsl{rpart}. Na wykresie poniżej widzimy jakie zmienne warunkowały kolejne przejścia w drzewie. Natomiast macierz pomyłek \ref{tab:DecisionTree} wskazuje, że skuteczność wyniosła 0.79. Oczywiście pjedyncze drzewo jest bardzo niestabilne, dlatego zastosujemy też metody ze wzmocnieniem.
 
 ```{r chunk-17, fig.width=8, fig.height=6, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:DecisionTree}Drzewo dezycyjne", results='hide'}
 #source("src/rscripts/Classification/LinearRegression/LinearRegressionPlotAccuracy.R", local = knitr::knit_global())

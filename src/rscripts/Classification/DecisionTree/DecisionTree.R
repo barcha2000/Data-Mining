@@ -23,3 +23,5 @@ generate_confusion_matrix <- function(actual, predicted) {
 plot_decision_boundary <- function(model){
   return(rpart.plot(model))
 }
+
+
