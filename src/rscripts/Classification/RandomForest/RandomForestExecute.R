@@ -32,5 +32,5 @@ predicted <- predict(model, test_data)
 confusion_matrix <- confusionMatrix(predicted, test_data$Churn)
 a<-as.table(confusion_matrix)
 
-rownames(a) <- c("Rzeczwiste 0", "Rzeczwiste 1")
-colnames(a) <- c("Estymowane 0", "Estymowane 1")
+colnames(a) <- c("Rzeczwiste 0", "Rzeczwiste 1")
+rownames(a) <- c("Estymowane 0", "Estymowane 1")

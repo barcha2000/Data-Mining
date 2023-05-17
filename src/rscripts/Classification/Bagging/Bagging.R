@@ -24,13 +24,13 @@ actual
 
 # Compute the accuracy of the model
 accuracy <- mean((as.numeric(predicted > 0.5)) == as.numeric(actual))
-cat("Accuracy:", accuracy, "\n")
+#cat("Accuracy:", accuracy, "\n")
 
 
 confusion_matrix <- confusionMatrix(as.factor(as.numeric(predicted > 0.5)), test_data_num$Churn)$table
 
-rownames(confusion_matrix) <- c("Rzeczwiste 0", "Rzeczwiste 1")
-colnames(confusion_matrix) <- c("Estymowane 0", "Estymowane 1")
+colnames(confusion_matrix) <- c("Rzeczwiste 0", "Rzeczwiste 1")
+rownames(confusion_matrix) <- c("Estymowane 0", "Estymowane 1")
 
 conf<-xtable(confusion_matrix, caption = "Macierz pomyłek dla baggingu")
 
