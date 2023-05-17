@@ -1,6 +1,7 @@
 library(dplyr)
 library(ggplot2)
 
+#Budujemy model regresji logistycznej
 build_logistic_regression_model <- function(train_data, variables = c("gender","SeniorCitizen","Partner","Dependents","tenure","PhoneService","MultipleLines","InternetService","OnlineSecurity","OnlineBackup","DeviceProtection","TechSupport","StreamingTV","StreamingMovies","Contract","PaperlessBilling","PaymentMethod","MonthlyCharges","TotalCharges", "Churn")) {
   df_subset <- train_data %>% dplyr::select(variables)
   formula <- as.formula(paste("Churn ~ ", paste(variables[-length(variables)], collapse = "+")))
@@ -8,6 +9,7 @@ build_logistic_regression_model <- function(train_data, variables = c("gender","
   return(model)
 }
 
+#Tworzymy predykcje
 make_logistic_regression_prediction <- function(model, test_data, threshold = 0.5, variables = c("gender","SeniorCitizen","Partner","Dependents","tenure","PhoneService","MultipleLines","InternetService","OnlineSecurity","OnlineBackup","DeviceProtection","TechSupport","StreamingTV","StreamingMovies","Contract","PaperlessBilling","PaymentMethod","MonthlyCharges","TotalCharges")) {
   df_subset_test <- test_data %>% dplyr::select(variables, "Churn")
   predictions <- predict(model, newdata = df_subset_test, type = "response")
@@ -17,23 +19,19 @@ make_logistic_regression_prediction <- function(model, test_data, threshold = 0.
   return(list(classified = classified, accuracy = accuracy, confusion_matrix = confusion_matrix))
 }
 
+#Tworzymy wykres skuteczności względem punktu odcięcia
 plot_threshold_accuracy <- function(model,test_data) {
-  # tworzymy sekwencję progów od 1 do 2 z krokiem 0.01
   thresholds <- seq(0, 1, by = 0.01)
   
-  # inicjalizujemy wektory na wyniki
   accuracies <- rep(0, length(thresholds))
   
-  # dokonujemy predykcji dla każdej wartości progu
   for (i in seq_along(thresholds)) {
     prediction <- make_logistic_regression_prediction(model, test_data, threshold = thresholds[i], variables = colnames(test_data))
     accuracies[i] <- prediction$accuracy
   }
   
-  # znajdujemy wartość progową dla maksymalnej skuteczności
   max_threshold <- thresholds[which.max(accuracies)]
   
-  # tworzymy wykres skuteczności względem wartości progowej
   df <- data.frame(threshold = thresholds, accuracy = accuracies)
   
   plot <- ggplot(df, aes(x = threshold, y = accuracy)) +
@@ -48,6 +46,7 @@ plot_threshold_accuracy <- function(model,test_data) {
   return(plot)
 }
 
+#Tworzymy wykres wartości współczynników modelu
 plot_regression_coefficients <- function(model) {
   coefficients <- coef(model)
   variable_names <- names(coefficients)[-1]
