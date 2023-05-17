@@ -1,3 +1,5 @@
+#  --Chunk 25--
+
 library(ipred)
 library(rpart)
 
@@ -24,7 +26,6 @@ actual
 
 # Compute the accuracy of the model
 accuracy <- mean((as.numeric(predicted > 0.5)) == as.numeric(actual))
-#cat("Accuracy:", accuracy, "\n")
 
 
 confusion_matrix <- confusionMatrix(as.factor(as.numeric(predicted > 0.5)), test_data_num$Churn)$table

@@ -1,3 +1,5 @@
+#  --Chunk 24--
+
 library(xgboost)
 library(ggplot2)
 library(DALEX)
@@ -31,7 +33,6 @@ library(pROC)
 accuracy <- mean((as.numeric(pred > 0.5)) == as.numeric(test_label))
 auc <- auc(roc(test_label, pred))
 
-#cat("Accuracy:", accuracy, "\n")
 
 library(caret)
 confusion_matrix <- confusionMatrix(as.factor(as.numeric(pred > 0.5)), test_data_num$Churn)$table

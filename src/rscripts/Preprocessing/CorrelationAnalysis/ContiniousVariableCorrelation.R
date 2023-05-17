@@ -1,4 +1,5 @@
 #  --Chunk 7--
+
 library(xtable)
 
 # Wybieramy tylko zmienne ciągłe
